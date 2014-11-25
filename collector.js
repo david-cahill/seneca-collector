@@ -51,34 +51,36 @@ module.exports = function( options ) {
     });
 
   function parseInfluxData(data) {
-    var columns = data[0].columns;
-    var points  = data[0].points;
-    var patternIndex = columns.indexOf("pattern");
+    if(data.length > 0) {
+      var columns = data[0].columns;
+      var points  = data[0].points;
+      var patternIndex = columns.indexOf("pattern");
 
-    var result = [];
-    var count = 1;
-    var countedRoles = [];
+      var result = [];
+      var count = 1;
+      var countedRoles = [];
 
-    for(var i = 0; i<points.length; i++) {
+      for(var i = 0; i<points.length; i++) {
 
-      var containsRole = _.contains(countedRoles,points[i][patternIndex]);
+        var containsRole = _.contains(countedRoles,points[i][patternIndex]);
 
-      if(!containsRole) {
-        result.push({pattern:points[i][patternIndex],
-                     count:count
-                    });
-        countedRoles.push(points[i][patternIndex]);
-      } else {
+        if(!containsRole) {
+          result.push({pattern:points[i][patternIndex],
+                       count:count
+                      });
+          countedRoles.push(points[i][patternIndex]);
+        } else {
 
-        for(var j = 0; j < result.length; j++) {
-          if(result[j].pattern === points[i][patternIndex]) {
-            result[j].count++;
+          for(var j = 0; j < result.length; j++) {
+            if(result[j].pattern === points[i][patternIndex]) {
+              result[j].count++;
+            }
           }
-        }
-    }
+      }
 
+      }
+      return result;
     }
-    return result;
   }
 
   return {
