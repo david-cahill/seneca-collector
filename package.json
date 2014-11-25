@@ -1,0 +1,38 @@
+{
+  "name": "seneca-collector",
+  "version": "0.1.0",
+  "description": "### Node.js Seneca Collector",
+  "main": "collector.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/david-cahill/seneca-collector.git"
+  },
+  "keywords": [
+    "seneca",
+    "collector",
+    "plugin"
+  ],
+  "author": "David Cahill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/david-cahill/seneca-collector/issues"
+  },
+  "homepage": "https://github.com/david-cahill/seneca-collector",
+  "dependencies": {
+    "influx": "^2.1.0",
+    "underscore": "^1.7.0"
+  },
+  "peerDependencies": {
+    "seneca": "*"
+  },
+  "devDependencies": {
+    "mocha": "~1.20.1",
+    "seneca": "~0.5.21"
+  }
+}
