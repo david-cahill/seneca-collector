@@ -38,15 +38,15 @@ module.exports = function( options ) {
 
   seneca.add({role:plugin, cmd: 'get'}, function(args, done) {
     var query = '';
-    if(args.fieldName && args.seriesName) {
-      query = 'SELECT ' + args.fieldName + ' FROM ' + args.seriesName;
+    if(args.fieldName && options.seriesName) {
+      query = 'SELECT ' + args.fieldName + ' FROM ' + options.seriesName;
     } else {
-      query = "SELECT * FROM " + args.seriesName + " WHERE pattern ='"+args.pattern+"'";
+      query = "SELECT * FROM " + options.seriesName + " WHERE pattern ='"+args.pattern+"'";
     }
 
     client.query(query, function(err,response) {
     var parsedResponse = parseInfluxData(response);
-            done(null,parsedResponse);
+            done(null,response);
         });
     });
 
@@ -55,6 +55,7 @@ module.exports = function( options ) {
       var columns = data[0].columns;
       var points  = data[0].points;
       var patternIndex = columns.indexOf("pattern");
+      var timeIndex = columns.indexOf("time");
 
       var result = [];
       var count = 1;
@@ -66,7 +67,8 @@ module.exports = function( options ) {
 
         if(!containsRole) {
           result.push({pattern:points[i][patternIndex],
-                       count:count
+                       count:count,
+                       time:points[i][timeIndex]
                       });
           countedRoles.push(points[i][patternIndex]);
         } else {
