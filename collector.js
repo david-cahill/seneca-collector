@@ -45,9 +45,9 @@ module.exports = function( options ) {
     }
 
     client.query(query, function(err,response) {
-    var parsedResponse = parseInfluxData(response);
-            done(null,response);
-        });
+      //var parsedResponse = parseInfluxData(response);
+       done(null,response);
+      });
     });
 
   function parseInfluxData(data) {
