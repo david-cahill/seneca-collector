@@ -15,7 +15,15 @@ Tested on: Seneca 0.6.0, Node 0.10.29
 
 ```JavaScript
 var seneca = require('seneca')();
-seneca.use('collector');
+var collector = require('seneca-collector');
+var influxOptions = { host:'localhost',
+                      port: 8086,
+                      username:'root',
+                      password:'root',
+                      database:'test_db',
+                      seriesName:'test_series'
+                    };
+seneca.use(collector,influxOptions);
 ```
 
 ## Install
@@ -24,23 +32,6 @@ seneca.use('collector');
 npm install seneca
 npm install seneca-collector
 ```
-
-## Message Patterns
-
-Foo.
-
-   * `role:msgstats, cmd:foo` foo
-
-Bar.
-
-### Options
-
-```JavaScript
-seneca.use('collector', {
-  foo:'bar'
-});
-```
-
 
 
 ## Test
