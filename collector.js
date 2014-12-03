@@ -41,7 +41,13 @@ module.exports = function( options ) {
     if(args.fieldName && options.seriesName) {
       query = 'SELECT ' + args.fieldName + ' FROM ' + options.seriesName;
     } else {
-      query = "SELECT * FROM " + options.seriesName + " WHERE pattern ='"+args.pattern+"'";
+
+      if(args.type === 'normal') {
+        query = "SELECT * FROM " + options.seriesName + " WHERE pattern ='"+args.pattern+"'";
+      } else {
+        query = "select count(pattern) from " + options.seriesName + " where time > now() - 2d and pattern='"+args.pattern+"' group by time(1m) order asc";
+      }
+      
     }
 
     client.query(query, function(err,response) {
