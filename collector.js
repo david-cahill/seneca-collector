@@ -30,7 +30,7 @@ module.exports = function( options ) {
   });
 
   seneca.add({role:plugin, cmd:'send'}, function(args,done){
-    client.writePoint('actions', args.point, args.options, function(response) {
+    client.writePoint(options.seriesName, args.point, args.options, function(response) {
       done(null, {data:'received'});
     });
 
@@ -47,7 +47,7 @@ module.exports = function( options ) {
       } else {
         query = "select count(pattern) from " + options.seriesName + " where time > now() - 2d and pattern='"+args.pattern+"' group by time(1m) order asc";
       }
-      
+
     }
 
     client.query(query, function(err,response) {
