@@ -51,45 +51,9 @@ module.exports = function( options ) {
     }
 
     client.query(query, function(err,response) {
-      //var parsedResponse = parseInfluxData(response);
-       done(null,response);
-      });
+      done(null,response);
     });
-
-  function parseInfluxData(data) {
-    if(data.length > 0) {
-      var columns = data[0].columns;
-      var points  = data[0].points;
-      var patternIndex = columns.indexOf("pattern");
-      var timeIndex = columns.indexOf("time");
-
-      var result = [];
-      var count = 1;
-      var countedRoles = [];
-
-      for(var i = 0; i<points.length; i++) {
-
-        var containsRole = _.contains(countedRoles,points[i][patternIndex]);
-
-        if(!containsRole) {
-          result.push({pattern:points[i][patternIndex],
-                       count:count,
-                       time:points[i][timeIndex]
-                      });
-          countedRoles.push(points[i][patternIndex]);
-        } else {
-
-          for(var j = 0; j < result.length; j++) {
-            if(result[j].pattern === points[i][patternIndex]) {
-              result[j].count++;
-            }
-          }
-      }
-
-      }
-      return result;
-    }
-  }
+  });
 
   return {
     name: plugin
