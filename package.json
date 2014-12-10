@@ -1,6 +1,6 @@
 {
   "name": "seneca-collector",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "### Node.js Seneca Collector",
   "main": "collector.js",
   "directories": {
