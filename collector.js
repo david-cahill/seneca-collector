@@ -44,8 +44,10 @@ module.exports = function( options ) {
 
       if(args.type === 'normal') {
         query = "SELECT * FROM " + options.seriesName + " WHERE pattern ='"+args.pattern+"'";
+      } else if(args.type === 'time' && args.time === 'all') {
+        query = "SELECT count(pattern) FROM " + options.seriesName + " WHERE pattern ='"+args.pattern+"' group by time(1m) order asc";
       } else {
-        query = "select count(pattern) from " + options.seriesName + " where time > now() - 2d and pattern='"+args.pattern+"' group by time(1m) order asc";
+        query = "SELECT count(pattern) FROM " + options.seriesName + " WHERE time > now() - " + args.time + " and pattern ='"+args.pattern+"' group by time(1m) order asc";
       }
 
     }
