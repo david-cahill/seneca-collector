@@ -57,6 +57,21 @@ module.exports = function( options ) {
     });
   });
 
+  seneca.add({role:plugin, cmd:'getSenecaActions'}, function(args,done) {
+    var query = 'select distinct(pattern) from actions'
+    client.query(query, function(err,response) {
+      var patterns = response[0].points.map(function(action) {
+        var pattern = {};
+        action[1].split(',').forEach(function(pair) {
+          var newPair = pair.split(':');
+          pattern[newPair[0]] = newPair[1];
+        });
+        return pattern;
+      });  
+      done(null,patterns);
+    });
+  });
+
   return {
     name: plugin
   }
