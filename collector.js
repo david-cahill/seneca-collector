@@ -58,7 +58,7 @@ module.exports = function( options ) {
   });
 
   seneca.add({role:plugin, cmd:'getSenecaActions'}, function(args,done) {
-    var query = 'select distinct(pattern) from actions'
+    var query = 'select distinct(pattern) from ' + options.seriesName;
     client.query(query, function(err,response) {
       var patterns = response[0].points.map(function(action) {
         var pattern = {};
